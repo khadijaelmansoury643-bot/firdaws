@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Envoyer votre image</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{font-family:Arial;background:#f4f4f4;padding:20px;}
+.container{max-width:400px;margin:auto;background:white;padding:20px;border-radius:8px;text-align:center;}
+input[type=file]{margin-bottom:15px;width:100%;}
+button{padding:10px 15px;background:black;color:white;border:none;cursor:pointer;margin-bottom:15px;width:100%;}
+img{width:100%;border-radius:6px;margin-top:10px;}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Envoyer votre image</h2>
+<input type="file" id="imageInput" accept="image/*" capture="environment" required><br>
+<button onclick="clearImage()">Supprimer l'image</button>
+<div id="preview"></div>
+</div>
+
+<script>
+const input = document.getElementById('imageInput');
+const preview = document.getElementById('preview');
+
+input.addEventListener('change', () => {
+    preview.innerHTML = ''; // نحيد أي صورة قديمة
+    const file = input.files[0]; // ناخد صورة وحدة فقط
+    if(file){
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            preview.appendChild(img);
+        }
+        reader.readAsDataURL(file);
+    }
+});
+
+function clearImage(){
+    preview.innerHTML = '';
+    input.value = '';
+}
+</script>
+</body>
+</html>
